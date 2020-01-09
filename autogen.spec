@@ -1,14 +1,12 @@
 Name:		autogen
 Version:	5.18.14
-Release:	3
+Release:	4
 License:	GPLv2+ and GPLv3+
 Summary:	Automated text file generator
 URL:		http://www.gnu.org/software/autogen/
 Provides:	autogen-libopts
 Obsoletes:	autogen-libopts
-Source0:	ftp://ftp.gnu.org/gnu/autogen/rel%{version}/%{name}-%{version}.tar.xz
-
-Patch0:		autogen-multilib.patch
+Source0:	http://ftp.gnu.org/gnu/autogen/rel%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:	gcc guile-devel libtool libxml2-devel
 BuildRequires:	perl-generators
@@ -95,7 +93,8 @@ make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
 %exclude %{_infodir}/dir
 
 %changelog
+* Mon Dec 30 2019 openEuler Buildteam <buildteam@openeuler.org> - 5.18.14-4
+- Modify Source
+
 * Thu Aug 29 2019 hexiaowen <hexiaowen@huawei.com> - 5.18.14-3
 - Package init
-
-
