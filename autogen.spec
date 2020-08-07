@@ -1,6 +1,6 @@
 Name:		autogen
-Version:	5.18.14
-Release:	4
+Version:	5.18.16
+Release:	1
 License:	GPLv2+ and GPLv3+
 Summary:	Automated text file generator
 URL:		http://www.gnu.org/software/autogen/
@@ -93,6 +93,9 @@ make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
 %exclude %{_infodir}/dir
 
 %changelog
+* Thu Jul 16 2020 wangchen <wangchen137@huawei.com> - 5.18.16-1
+- Update to 5.18.16
+
 * Mon Dec 30 2019 openEuler Buildteam <buildteam@openeuler.org> - 5.18.14-4
 - Modify Source
 
