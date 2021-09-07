@@ -1,6 +1,6 @@
 Name:		autogen
 Version:	5.18.16
-Release:	1
+Release:	2
 License:	GPLv2+ and GPLv3+
 Summary:	Automated text file generator
 URL:		http://www.gnu.org/software/autogen/
@@ -10,6 +10,7 @@ Source0:	http://ftp.gnu.org/gnu/autogen/rel%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:	gcc guile-devel libtool libxml2-devel
 BuildRequires:	perl-generators
+BuildRequires:  chrpath
 
 %description
 AutoGen is a tool designed to simplify the creation and maintenance of
@@ -56,6 +57,13 @@ make check
 
 %install
 make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
+
+#Remove rpath
+chrpath --delete $RPM_BUILD_ROOT%{_bindir}/{columns,getdefs,%{name},xml2ag}
+
+mkdir -p $RPM_BUILD_ROOT/etc/ld.so.conf.d
+echo "%{_libdir}" > $RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}-%{_arch}.conf
+
 %delete_la_and_a
 
 
@@ -72,6 +80,7 @@ make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}
 %{_libdir}/%{name}/*
 %{_libdir}/libopts.so.25*
+%config(noreplace) /etc/ld.so.conf.d/*
 
 %files devel
 %{_bindir}/autoopts-config
@@ -93,6 +102,9 @@ make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT
 %exclude %{_infodir}/dir
 
 %changelog
+* Tue Sep 7 2021 wangchen <wangchen137@huawei.com> - 5.18.16-2
+- remove rpath and runpath of exec files and libraries
+
 * Thu Jul 16 2020 wangchen <wangchen137@huawei.com> - 5.18.16-1
 - Update to 5.18.16
 
