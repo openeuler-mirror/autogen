@@ -1,0 +1,38 @@
+From 3b33eb2fc09a2d7221da6bc7159f374fdef8906a Mon Sep 17 00:00:00 2001
+From: Bruce Korb <bkorb@gnu.org>
+Date: Fri, 6 Sep 2019 08:28:00 -0700
+Subject: [PATCH] fix stray blanking of config file char
+
+* autoopts/configfile.c (trim_xml_text): remove unnecessary and
+  occasionally destructive blanking of first character.
+---
+ autoopts/configfile.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/autoopts/configfile.c b/autoopts/configfile.c
+index 783a9d8a..e8f557ad 100644
+--- a/autoopts/configfile.c
++++ b/autoopts/configfile.c
+@@ -802,10 +802,9 @@ trim_xml_text(char * intxt, char const * pznm, tOptionLoadMode mode)
+         pz[1] = '/';
+         memcpy(pz+2, pznm, nm_len);
+         nm_len  += 2;
+-        pz[nm_len++] = '>';
++        pz[nm_len++] = '>'; // nm_len is now length of end mark
+         pz[nm_len]   = NUL;
+ 
+-        *intxt = ' ';
+         etext = strstr(intxt, pz);
+         if (pz != z) AGFREE(pz);
+     }
+@@ -825,6 +824,7 @@ trim_xml_text(char * intxt, char const * pznm, tOptionLoadMode mode)
+ }
+ 
+ /**
++ * process hex and amphersand encoded characters.
+  */
+ static void
+ cook_xml_text(char * pzData)
+-- 
+2.27.0
+
