@@ -1,12 +1,14 @@
 Name:		autogen
 Version:	5.18.16
-Release:	2
+Release:	3
 License:	GPLv2+ and GPLv3+
 Summary:	Automated text file generator
 URL:		http://www.gnu.org/software/autogen/
 Provides:	autogen-libopts
 Obsoletes:	autogen-libopts
 Source0:	http://ftp.gnu.org/gnu/autogen/rel%{version}/%{name}-%{version}.tar.xz
+
+Patch0:	backport-fix-stray-blanking-of-config-file-char.patch
 
 BuildRequires:	gcc guile-devel libtool libxml2-devel
 BuildRequires:	perl-generators
@@ -102,6 +104,9 @@ echo "%{_libdir}" > $RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}-%{_arch}.conf
 %exclude %{_infodir}/dir
 
 %changelog
+* Tue Oct 18 2022 zhangruifang <zhangruifang1@h-partners.com> - 5.18.16-3
+- fix stray blanking of config file char 
+
 * Tue Sep 7 2021 wangchen <wangchen137@huawei.com> - 5.18.16-2
 - remove rpath and runpath of exec files and libraries
 
