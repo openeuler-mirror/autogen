@@ -1,0 +1,16 @@
+diff -ur autogen-5.18.16/configure autogen-5.18.16/configure
+--- autogen-5.18.16/configure	2018-08-27 01:44:54.000000000 +0800
++++ autogen-5.18.16/configure	2023-07-03 11:33:34.444756486 +0800
+@@ -18923,10 +18923,10 @@
+ 
+ WARN_CFLAGS=
+ test "X${GCC}" = Xyes && {
+-  CFLAGS="$CFLAGS -Wno-format-contains-nul -fno-strict-aliasing"
++  CFLAGS="$CFLAGS  -fno-strict-aliasing"
+   WARN_CFLAGS="$CFLAGS "`echo -Wall -Werror -Wcast-align -Wmissing-prototypes \
+ 	-Wpointer-arith -Wshadow -Wstrict-prototypes -Wwrite-strings \
+-	-Wstrict-aliasing=3 -Wextra -Wno-cast-qual`
++	 -Wextra -Wno-cast-qual`
+ }
+ ac_config_headers="$ac_config_headers config.h:config-h.in"
+ 

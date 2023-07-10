@@ -1,6 +1,6 @@
 Name:		autogen
 Version:	5.18.16
-Release:	3
+Release:	4
 License:	GPLv2+ and GPLv3+
 Summary:	Automated text file generator
 URL:		http://www.gnu.org/software/autogen/
@@ -9,7 +9,9 @@ Obsoletes:	autogen-libopts
 Source0:	http://ftp.gnu.org/gnu/autogen/rel%{version}/%{name}-%{version}.tar.xz
 
 Patch0:	backport-fix-stray-blanking-of-config-file-char.patch
-
+%if "%toolchain"=="clang"
+Patch1: fix-clang.patch
+%endif
 BuildRequires:	gcc guile-devel libtool libxml2-devel
 BuildRequires:	perl-generators
 BuildRequires:  chrpath
@@ -45,8 +47,12 @@ Man pages and other related documents.
 
 %build
 # Static libraries are needed to run test-suite.
+%if "%toolchain"=="clang"
+export CFLAGS="$RPM_OPT_FLAGS -Wno-implicit-fallthrough -Wno-missing-field-initializers -Wno-format"
+%else
 export CFLAGS="$RPM_OPT_FLAGS -Wno-implicit-fallthrough -Wno-format-overflow \
 		-Wno-format-truncation"
+%endif
 %configure
 
 # Omit unused direct shared library dependencies.
@@ -104,6 +110,9 @@ echo "%{_libdir}" > $RPM_BUILD_ROOT/etc/ld.so.conf.d/%{name}-%{_arch}.conf
 %exclude %{_infodir}/dir
 
 %changelog
+* Fri Jul 7 2023 zhangxiang <zhangxiang@iscas.ac.cn> - 5.18.16-4
+- Fix clang build error
+
 * Tue Oct 18 2022 zhangruifang <zhangruifang1@h-partners.com> - 5.18.16-3
 - fix stray blanking of config file char
 
